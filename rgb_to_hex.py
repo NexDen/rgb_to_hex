@@ -128,7 +128,7 @@ def rgb_to(renk1,renk2,hız=0.0001,widget=None,root=None,text=None,fg=False,bg=F
         r2 = int(renk2[0])
         g2 = int(renk2[1])
         b2 = int(renk2[2])
-        # print(g1,g2)
+        print(g1,g2)
 
         r_fark = r1 - r2
         g_fark = g1 - g2
@@ -152,10 +152,10 @@ def rgb_to(renk1,renk2,hız=0.0001,widget=None,root=None,text=None,fg=False,bg=F
     ebob_bul = ebobb(mutlak(r_fark),mutlak(g_fark),mutlak(b_fark))
     katsayı = ebob_bul
     katsayı_eski = ebob_bul
-    # print("eski katsayı:",katsayı_eski)
+    print("eski katsayı:",katsayı_eski)
     if katsayı == 50:
         katsayı = 10
-        # print("yeni katsayı:",katsayı)
+        print("yeni katsayı:",katsayı)
     else:
         if katsayı > 10:
             for j in range(2,10):
@@ -176,10 +176,10 @@ def rgb_to(renk1,renk2,hız=0.0001,widget=None,root=None,text=None,fg=False,bg=F
                         katsayı = int(katsayı / 9)
                             
         
-            # print("yeni katsayı:",katsayı)
+            print("yeni katsayı:",katsayı)
         
     for i in range(255):
-        # print(r1,g1,b1)
+        print(r1,g1,b1)
         if (r1,g1,b1) != (r2,g2,b2):
             if r1 != r2:
                 if r_fark == 0:
@@ -250,5 +250,36 @@ def rgb_to(renk1,renk2,hız=0.0001,widget=None,root=None,text=None,fg=False,bg=F
     return (r1,g1,b1)
 
 
-if __name__ == "__main__":
-    print("bruh")
+
+
+colors = {
+    "black":(0,0,0),
+    "white":(255,255,255)
+}
+
+def hover(widget,text="",bg="",color=""):
+    text_old = widget["text"]
+    bg_old = widget["bg"]
+    color_old = widget["fg"]
+    widget.bind("<Enter>",lambda x: bind(widget,text=text,bg=bg,color=color))
+    widget.bind("<Leave>",lambda y: bind(widget,text=text_old,bg=bg_old,color=color_old))
+
+def bind(widget,text="",bg="",color=""):
+    if text == "":
+        text = widget["text"]
+    
+    if bg == "":
+        bg = widget["bg"]
+
+    if color == "":
+        color = widget["fg"]
+    
+    if text != "":
+        widget["text"] = text
+
+    if bg != "":
+        widget["bg"] = bg
+
+    if color != "":
+        widget["fg"] = color
+
