@@ -22,15 +22,29 @@ TEST EDEN:         YİĞİT EMİN KOLAN
 17/09/2020
 """
 
-def rgb(rgb):
+def hex(hex):
     """
     TKİNTERİN DESTEKLEDİĞİ 'HEX COLOR MODUNU' 'RGB' CİNSİNDEN ALIYORUZ VE HEXE
     ÇEVİRİYORUZ
     FONKSİYONUN İÇİNE DEĞER YAZILIRKEN İKİ TANE PARANTEZ AÇILMALIDIR, ÖRNEK:
-    rgb((100,100,100))
+    hex((100,100,100))
     """
-    return "#%02x%02x%02x" % rgb
+    try:
+        return "#%02x%02x%02x" % hex
+    except TypeError:
+        return hex
 
+
+def rgb(rgb):
+    """
+        Parametre olarak girilen "Hex" verisini "rgb" ye dönüştürüyoruz.
+        Örnek kullanım: rgb("#B4FBB8")
+    """
+    try:
+        rgb = rgb.lstrip("#")
+        return tuple(int(rgb[i:i+2], 16) for i in (0, 2, 4))
+    except AttributeError:
+        return rgb
 
 
 liste_renk = ["red","green","blue"] # KULLANILABİLEN RENKLER #
@@ -69,19 +83,15 @@ def mutlak(s1):
 
 """rgb_to fonksiyonu: İki 'rgb' kodunu birbirine çevirir ve (istenirse) widgetlara uygular"""
 
-def rgb_to(renk1,renk2,hız=0.0001,widget=None,root=None,text=None,fg=False,bg=False):
+def rgb_to(renk1,renk2):
     global key_r
     global key_g
     global key_b
     global p
+    global renk
     if renk1 == renk2:
         return renk2
-    
-    try:
-        hız/1
-    
-    except TypeError:
-        return hız,"onluk tabanda bir veri değil"
+
         
     if renk1 in liste_renk and renk2 in liste_renk:
         değer1 = renk_değer[renk1]
@@ -128,7 +138,6 @@ def rgb_to(renk1,renk2,hız=0.0001,widget=None,root=None,text=None,fg=False,bg=F
         r2 = int(renk2[0])
         g2 = int(renk2[1])
         b2 = int(renk2[2])
-        print(g1,g2)
 
         r_fark = r1 - r2
         g_fark = g1 - g2
@@ -179,7 +188,6 @@ def rgb_to(renk1,renk2,hız=0.0001,widget=None,root=None,text=None,fg=False,bg=F
             print("yeni katsayı:",katsayı)
         
     for i in range(255):
-        print(r1,g1,b1)
         if (r1,g1,b1) != (r2,g2,b2):
             if r1 != r2:
                 if r_fark == 0:
@@ -207,48 +215,9 @@ def rgb_to(renk1,renk2,hız=0.0001,widget=None,root=None,text=None,fg=False,bg=F
                     else:
                         b1 -= katsayı
 
-            if not widget:
-                pass
-            else:
-                if not root:
-                    if fg == True and bg == False:
-                        widget["fg"] = rgb((r1,g1,b1))
-                    if bg == True and fg == False:
-                        widget["bg"] = rgb((r1,g1,b1))
-                    if bg == True and fg == True:
-                        return "'bg' ve 'fg' parametreleri aynı anda girilemez"
-                    
-                    time.sleep(hız)
-                    if text:
-                        widget["text"] = text
-                    else:
-                        if fg == True and bg == False:
-                            widget["fg"] = rgb((r1,g1,b1))
-                        if bg == True and fg == False:
-                            widget["bg"] = rgb((r1,g1,b1))
-                        if bg == True and fg == True:
-                            return "'bg' ve 'fg' parametreleri aynı anda girilemez"
-
-
-                else:
-                    if fg == True and bg == False:
-                        widget["fg"] = rgb((r1,g1,b1))
-                    if bg == True and fg == False:
-                        widget["bg"] = rgb((r1,g1,b1))
-                    if fg == True and bg == True:
-                        return "'bg' ve 'fg' parametreleri aynı anda girilemez"
-                    time.sleep(hız)
-                    root.update()
-                    if text:
-                        widget["text"] = text
-                    else:
-                        pass
         else:
             break
-        
-    
     return (r1,g1,b1)
-
 
 
 
@@ -258,28 +227,35 @@ colors = {
 }
 
 def hover(widget,text="",bg="",color=""):
+    global bg_old
     text_old = widget["text"]
     bg_old = widget["bg"]
     color_old = widget["fg"]
     widget.bind("<Enter>",lambda x: bind(widget,text=text,bg=bg,color=color))
     widget.bind("<Leave>",lambda y: bind(widget,text=text_old,bg=bg_old,color=color_old))
 
+
 def bind(widget,text="",bg="",color=""):
+
     if text == "":
         text = widget["text"]
+
+    elif text != "":
+        widget["text"] = text
     
+
+
     if bg == "":
         bg = widget["bg"]
+
+    elif bg != "":
+        widget["bg"] = hex(bg)
+
+
 
     if color == "":
         color = widget["fg"]
     
-    if text != "":
-        widget["text"] = text
-
-    if bg != "":
-        widget["bg"] = bg
-
-    if color != "":
+    elif color != "":
         widget["fg"] = color
 
