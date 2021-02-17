@@ -22,17 +22,22 @@ TEST EDEN:         YİĞİT EMİN KOLAN
 17/09/2020
 """
 
-def hex(hex):
+class YanlışRGBDeğeriError(Exception):
+    pass
+
+def hex(r,g,b):
     """
-    TKİNTERİN DESTEKLEDİĞİ 'HEX COLOR MODUNU' 'RGB' CİNSİNDEN ALIYORUZ VE HEXE
+    TKİNTERİN DESTEKLEDİĞİ 'HEX COLOR' MODUNU 'RGB' CİNSİNDEN ALIYORUZ VE HEXE
     ÇEVİRİYORUZ
-    FONKSİYONUN İÇİNE DEĞER YAZILIRKEN İKİ TANE PARANTEZ AÇILMALIDIR, ÖRNEK:
-    hex((100,100,100))
+    ÖRNEK:
+    hex(100,100,100)
     """
-    try:
-        return "#%02x%02x%02x" % hex
-    except TypeError:
-        return hex
+    try: 
+        s = "#%02x%02x%02x" % (int(r),int(g),int(b))
+    except ValueError: raise YanlışRGBDeğeriError("Girdiğiniz Bir Veya Birden Fazla Değer Tamsayı Değil.")
+    if len(s) > 7:
+        raise YanlışRGBDeğeriError("Girdiğiniz Bir Veya Birden Fazla Değer 255'ten Büyük. ")
+    return s
 
 
 def rgb(rgb):
