@@ -254,7 +254,7 @@ def bind(widget,text="",bg="",color=""):
         bg = widget["bg"]
 
     elif bg != "":
-        widget["bg"] = hex(bg)
+        widget["bg"] = bg
 
 
 
@@ -263,4 +263,5 @@ def bind(widget,text="",bg="",color=""):
     
     elif color != "":
         widget["fg"] = color
+
 
