@@ -2,13 +2,13 @@ from distutils.core import setup
 setup(
   name = 'rgb_to_hex',         # How you named your package folder (MyLib)
   packages = ["."],   # Chose the same as "name"
-  version = '0.0.5',      # Start with a small number and increase it with every change you make
+  version = '0.0.6',      # Start with a small number and increase it with every change you make
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = "BU KÜTÜPHANE 'TKİNTER' KÜTÜPHANESİNDE 'RGB' RENK KODLARINI KULLANABİLMEK İÇİN YAZILMIŞTIR",   # Give a short description about your library
   author = 'SAMET ERİLTER',                   # Type in your name
   author_email = 'sametbilal34@gmail.com',      # Type in your E-Mail
   url = 'https://github.com/user/NexDen',   # Provide either the link to your github or to your website
-  download_url = 'https://github.com/NexDen/rgb_to_hex/archive/v0.0.4.tar.gz',    # I explain this later on
+  download_url = 'https://github.com/NexDen/rgb_to_hex/archive/v0.0.5.tar.gz',    # I explain this later on
   keywords = ["RGB","HEX"],   # Keywords that define your package best
   install_requires=[],
   classifiers=[
